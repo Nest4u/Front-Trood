@@ -50,7 +50,7 @@ const EditProjectForm: React.FC<EditProjectFormProps> = ({ projectId, onClose, o
 		  onUpdate();
 		  onClose(); 
 		} catch (error) {
-		 
+		  console.error('Error during project creation:', error);
 		  alert('Failed to update project');
 		}
 	  };
@@ -74,7 +74,7 @@ const EditProjectForm: React.FC<EditProjectFormProps> = ({ projectId, onClose, o
 			
 			onUpdate();
 		  } catch (error) {
-			
+			 console.error('Error during project creation:', error);
 			alert('Failed to delete project');
 		  }
 		}
