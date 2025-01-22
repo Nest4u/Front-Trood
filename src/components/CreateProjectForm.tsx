@@ -28,7 +28,7 @@ const CreateProjectForm: React.FC<ProjectFormProps> = ({ onClose, onUpdate }) =>
 		  const updatedProjects = [...projects, createdProject];
 		  localStorage.setItem('projects', JSON.stringify(updatedProjects));
 	  
-		  
+		  console.log('Updated projects:', updatedProjects);
 		  alert('Project created successfully');
 		  
 		 
