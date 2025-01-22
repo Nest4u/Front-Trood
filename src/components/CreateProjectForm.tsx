@@ -18,12 +18,20 @@ const CreateProjectForm: React.FC<ProjectFormProps> = ({ onClose, onUpdate }) =>
 	const handleCreateProject = async () => {
 		try {
 		  
-		  const createdProject = await projectsApi.createProject(newProject);
-	  
-		 
-		  const storedProjects = localStorage.getItem('projects');
-		  const projects = storedProjects ? JSON.parse(storedProjects) : [];
-	  
+		    const createdProject = await projectsApi.createProject(newProject);
+
+    // Получаем текущие проекты из LocalStorage
+    const storedProjects = localStorage.getItem('projects');
+    let projects = [];
+
+    if (storedProjects) {
+      try {
+        projects = JSON.parse(storedProjects); // Пытаемся разобрать данные
+      } catch (error) {
+        console.warn('Failed to parse LocalStorage projects, resetting:', error);
+        projects = []; // Сбрасываем данные, если они некорректны
+      }
+    }
 		  
 		  const updatedProjects = [...projects, createdProject];
 		  localStorage.setItem('projects', JSON.stringify(updatedProjects));
