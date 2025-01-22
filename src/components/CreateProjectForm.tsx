@@ -35,7 +35,7 @@ const CreateProjectForm: React.FC<ProjectFormProps> = ({ onClose, onUpdate }) =>
 		  onUpdate();
 		  onClose(); 
 		} catch (error) {
-		 
+		 console.error('Error during project creation:', error);
 		  alert('Failed to create project');
 		}
 	  };
