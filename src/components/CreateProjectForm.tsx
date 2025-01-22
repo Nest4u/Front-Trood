@@ -26,6 +26,8 @@ const CreateProjectForm: React.FC<ProjectFormProps> = ({ onClose }) => {
 			onClose()
 			window.location.reload()
 		} catch (error) {
+			console.error('Error:', error?.response?.data || error.message);
+
 			alert('Failed to create project')
 		}
 	}
