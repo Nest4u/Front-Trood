@@ -31,12 +31,20 @@ const EditProjectForm: React.FC<EditProjectFormProps> = ({ projectId, onClose, o
 	const handleSaveChanges = async () => {
 		try {
 		 
-		  await projectsApi.updateProject(projectId, projectData);
-	  
-		
-		  const storedProjects = localStorage.getItem('projects');
-		  const projects = storedProjects ? JSON.parse(storedProjects) : [];
-	  
+		 await projectsApi.updateProject(projectId, projectData);
+
+    
+    const storedProjects = localStorage.getItem('projects');
+    let projects = [];
+
+    if (storedProjects) {
+      try {
+        projects = JSON.parse(storedProjects); 
+      } catch (error) {
+        console.warn('Failed to parse LocalStorage projects, resetting:', error);
+        projects = []; 
+      }
+    }
 
 		  const updatedProjects = projects.map((project: any) =>
 			project.id === projectId ? { ...projectData, id: projectId } : project
@@ -59,10 +67,19 @@ const EditProjectForm: React.FC<EditProjectFormProps> = ({ projectId, onClose, o
 		  try {
 			
 			await projectsApi.deleteProject(projectId);
-	  
-			
-			const storedProjects = localStorage.getItem('projects');
-			const projects = storedProjects ? JSON.parse(storedProjects) : [];
+
+     
+      const storedProjects = localStorage.getItem('projects');
+      let projects = [];
+
+      if (storedProjects) {
+        try {
+          projects = JSON.parse(storedProjects); // Пытаемся разобрать данные
+        } catch (error) {
+          console.warn('Failed to parse LocalStorage projects, resetting:', error);
+          projects = []; 
+        }
+      }
 	  
 			
 			const updatedProjects = projects.filter((project: any) => project.id !== projectId);
