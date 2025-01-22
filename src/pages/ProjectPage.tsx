@@ -20,7 +20,7 @@ function ProjectPage() {
 				<div className='p-4 flex-1 bg-slate-200 rounded-l-3xl overflow-auto'>
 					<div className='flex items-start mx-7 my-7 space-x-4'>
 						<div className='flex-1'>
-							{!showForm && !editProjectId && <ProjectsList onEdit={id => setEditProjectId(id)} />}
+							{!showForm && !editProjectId && <ProjectsList onEdit={id => setEditProjectId(id)}/>}
 						</div>
 						{!showForm && !editProjectId && (
 							<button
@@ -32,7 +32,7 @@ function ProjectPage() {
 						)}
 					</div>
 
-					{showForm && <CreateProjectForm onClose={() => setShowForm(false)} />}
+					{showForm && <CreateProjectForm onClose={() => setShowForm(false)}   onUpdate={handleUpdate} />}
 					{editProjectId && (
 						<EditProjectForm
 							projectId={editProjectId}
