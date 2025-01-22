@@ -16,6 +16,7 @@ const CreateProjectForm: React.FC<ProjectFormProps> = ({ onClose }) => {
 
 	const handleCreateProject = async () => {
 		try {
+			console.log('Updated project:', projectData);
 			await projectsApi.createProject(newProject)
 
 			const storedProjects = localStorage.getItem('projects')
