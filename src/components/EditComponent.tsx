@@ -30,39 +30,55 @@ const EditProjectForm: React.FC<EditProjectFormProps> = ({ projectId, onClose, o
 
 	const handleSaveChanges = async () => {
 		try {
-			await projectsApi.updateProject(projectId, projectData)
+		 
+		  await projectsApi.updateProject(projectId, projectData);
+	  
+		
+		  const storedProjects = localStorage.getItem('projects');
+		  const projects = storedProjects ? JSON.parse(storedProjects) : [];
+	  
 
-			const storedProjects = localStorage.getItem('projects')
-			const projects = storedProjects ? JSON.parse(storedProjects) : []
-			const updatedProjects = projects.map((project: any) =>
-				project.id === projectId ? projectData : project
-			)
-			localStorage.setItem('projects', JSON.stringify(updatedProjects))
-
-			alert('Project updated successfully')
-			onUpdate()
-			onClose()
+		  const updatedProjects = projects.map((project: any) =>
+			project.id === projectId ? { ...projectData, id: projectId } : project
+		  );
+		  localStorage.setItem('projects', JSON.stringify(updatedProjects));
+	  
+		 
+		  alert('Project updated successfully');
+		  
+		 
+		  onUpdate();
+		  onClose(); 
 		} catch (error) {
-			alert('Failed to update project')
+		 
+		  alert('Failed to update project');
 		}
-	}
-	const handleDelete = async () => {
+	  };
+	  const handleDelete = async () => {
 		if (window.confirm('Are you sure you want to delete this project?')) {
-			try {
-				await projectsApi.deleteProject(projectId)
-
-				const storedProjects = localStorage.getItem('projects')
-				const projects = storedProjects ? JSON.parse(storedProjects) : []
-				const updatedProjects = projects.filter((project: any) => project.id !== projectId)
-				localStorage.setItem('projects', JSON.stringify(updatedProjects))
-				alert('Project deleted successfully')
-				onUpdate()
-				onClose()
-			} catch (error) {
-				alert('Failed to delete project')
-			}
+		  try {
+			
+			await projectsApi.deleteProject(projectId);
+	  
+			
+			const storedProjects = localStorage.getItem('projects');
+			const projects = storedProjects ? JSON.parse(storedProjects) : [];
+	  
+			
+			const updatedProjects = projects.filter((project: any) => project.id !== projectId);
+			localStorage.setItem('projects', JSON.stringify(updatedProjects));
+	  
+			
+			alert('Project deleted successfully');
+			
+			
+			onUpdate();
+		  } catch (error) {
+			
+			alert('Failed to delete project');
+		  }
 		}
-	}
+	  };
 
 	return (
 		<div className='bg-white shadow rounded  p-6'>
