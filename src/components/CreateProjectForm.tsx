@@ -16,16 +16,14 @@ const CreateProjectForm: React.FC<ProjectFormProps> = ({ onClose }) => {
 
 	const handleCreateProject = async () => {
 		try {
-			console.log('Updated project:', projectData);
-			await projectsApi.createProject(newProject)
+			  const response = await projectsApi.createProject(newProject);
 
-			const storedProjects = localStorage.getItem('projects')
-			const projects = storedProjects ? JSON.parse(storedProjects) : []
-			const updatedProjects = [...projects, { ...newProject, id: Date.now() }]
-			localStorage.setItem('projects', JSON.stringify(updatedProjects))
-			alert('Project created successfully')
-			onClose()
-			window.location.reload()
+    // Обновляем список через сервер
+    const updatedProjects = await projectsApi.getProjects();
+    setProjects(updatedProjects);
+
+    alert('Project created successfully');
+    onClose();
 		} catch (error) {
 			alert('Failed to create project')
 		}
